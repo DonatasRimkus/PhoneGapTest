@@ -1,56 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <link rel="stylesheet" href="http://api.alink.aliyun.com/sdk/v1/component.css">
-	<link rel="stylesheet" href="css/main.css">
-	
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <title>FasTip - Tip Calculator</title>
+    <link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.4.0.css">
+    <link rel="stylesheet"  href="css/app.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.0.js"></script>
 </head>
-
-
-<body versionStyle="style.2.0.0" category="AIRCONDITION">
-	<div class="ui-aq-head">
-		<div class="ui-AL-tem"></div>
-		<div class="ui-aq-stauts">
-			<div class="statusY"></div>
-		</div> 
-	</div>
-	<div class="all-content">
-		<grid class='bind_handle_grid2'></grid>
-		<div class="ui-slider-item bind_handle_Ventilation_volume"></div>
-		<div class="ui-slider-item bind_handle_Ventilation_Speed"></div>
-		<div class="ui-slider-item bind_handle_Direction_UDown"></div>
- 		<!-- <div class="bind_handle_switch_btn ui-switch-section"></div>-->	
-		<div class='bind_functionRadio_text'></div>
-		<div class='bind_functionCheck_text'></div>
-		<div class="bind_handle_offnet ui-offNet"></div>
-		<div class="bind_handle_item_alarmClock"></div>
-		<div class="bind_handle_item_list"></div>
-		<div class="bind_handle_check_item_list"></div>
-	</div>
-	<div class="all-btn-open">
-		<div class="ui-important-orange-btn booking-btn hidden">预约</div>
-		<div class="ui-important-orange-btn submit-btn hidden"><span class="iconfont"></span>启动</div>
-		<div class="ui-important-green-btn submit-close hidden"><span class="iconfont"></span>关闭</div>
-	</div>
-	<div class="s-load2 hidden"></div>
-	<div class="s-load">
-	    <div class="cc-loadtext">
-	        <i class="iconfont"></i>
-	        <span id="J_loadtxt">正在同步设备状态，请稍候...</span>
-	    </div>
-	</div>
-	<!--断网toast-->
-	<div class="bind_offlineToast ui-toast"></div>
-
+<body>
+<div data-role="page" class="" id="mainPage">
+    <div data-role="header" class="">
+        <h1>FasTip</h1>
+        <a href="#settingsPage" id='settingsButton' class="ui-btn-right" data-role="button" data-icon="gear">Settings</a>
+    </div>
+    <div data-role="content" class="">
+        <form>
+            <div data-role="fieldcontain">
+                <label for="billAmount">Bill Amount:</label>
+                <input type="number" name="billAmount" id="billAmount" data-clear-btn="true" maxlength="3" value="" placeholder="Enter amount here">
+            </div>
+            <p style="text-align: center;">
+                <a href="#" id="calcTip" data-role="button" data-icon="check">Calculate Tip</a>
+            </p>
+            <p class="amounts">
+                <label>Tip Amount</label>
+                <span id="tipAmount">$0.00</span>
+            </p>
+            <p class="amounts totals">
+                <label>Total Amount</label>
+                <span id="totalAmount">$0.00</span>
+            </p>
+        </form>
+    </div>
+</div>
+<div data-role="page" class="" id="settingsPage" data-add-back-btn="true" >
+    <div data-role="header" class="">
+        <a href="#mainPage" class="ui-btn ui-icon-delete ui-btn-icon-left" data-rel="back">Cancel</a>
+        <h1>FasTip - Settings</h1>
+    </div>
+    <div data-role="content" class="">
+        <form>
+            <input type="number" name="tipPercentage" id="tipPercentage" value="" placeholder="Tip Percentage">
+            <p style="text-align: center;">
+                <a href="#" id='saveSettings' data-role="button" data-inline="true" data-icon="check">Save</a>
+            </p>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="cordova.js"></script>
+<script src="js/app.js"></script>
 </body>
-<script type="text/javascript" src="http://api.alink.aliyun.com/sdk/v2/sdk.js"></script>
-<script type="text/javascript" src="http://api.alink.aliyun.com/sdk/v1/component.js"></script>
-<script type="text/javascript" src="./app.js" defer async="true"></script>
-
 </html>
