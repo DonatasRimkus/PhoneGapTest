@@ -1,20 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-	<title>SydJS App</title>
-<!--Adobe Edge Runtime-->
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <script type="text/javascript" charset="utf-8" src="index_edgePreload.js"></script>
-    <style>
-        .edgeLoad-EDGE-25008638 { visibility:hidden; }
-    </style>
-<!--Adobe Edge Runtime End-->
-
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="http://api.alink.aliyun.com/sdk/v1/component.css">
+	<link rel="stylesheet" href="css/main.css">
+	
 </head>
-<body style="margin:0;padding:0;">
-	<div id="Stage" class="EDGE-25008638">
+
+
+<body versionStyle="style.2.0.0" category="AIRCONDITION">
+	<div class="ui-aq-head">
+		<div class="ui-AL-tem"></div>
+		<div class="ui-aq-stauts">
+			<div class="statusY"></div>
+		</div> 
 	</div>
+	<div class="all-content">
+		<grid class='bind_handle_grid2'></grid>
+		<div class="ui-slider-item bind_handle_Ventilation_volume"></div>
+		<div class="ui-slider-item bind_handle_Ventilation_Speed"></div>
+		<div class="ui-slider-item bind_handle_Direction_UDown"></div>
+ 		<!-- <div class="bind_handle_switch_btn ui-switch-section"></div>-->	
+		<div class='bind_functionRadio_text'></div>
+		<div class='bind_functionCheck_text'></div>
+		<div class="bind_handle_offnet ui-offNet"></div>
+		<div class="bind_handle_item_alarmClock"></div>
+		<div class="bind_handle_item_list"></div>
+		<div class="bind_handle_check_item_list"></div>
+	</div>
+	<div class="all-btn-open">
+		<div class="ui-important-orange-btn booking-btn hidden">预约</div>
+		<div class="ui-important-orange-btn submit-btn hidden"><span class="iconfont"></span>启动</div>
+		<div class="ui-important-green-btn submit-close hidden"><span class="iconfont"></span>关闭</div>
+	</div>
+	<div class="s-load2 hidden"></div>
+	<div class="s-load">
+	    <div class="cc-loadtext">
+	        <i class="iconfont"></i>
+	        <span id="J_loadtxt">正在同步设备状态，请稍候...</span>
+	    </div>
+	</div>
+	<!--断网toast-->
+	<div class="bind_offlineToast ui-toast"></div>
+
 </body>
+<script type="text/javascript" src="http://api.alink.aliyun.com/sdk/v2/sdk.js"></script>
+<script type="text/javascript" src="http://api.alink.aliyun.com/sdk/v1/component.js"></script>
+<script type="text/javascript" src="./app.js" defer async="true"></script>
+
 </html>
