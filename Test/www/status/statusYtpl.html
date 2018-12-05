@@ -1,0 +1,39 @@
+<ul class="state-cont-list clearfix">
+    <%_.each(data,function(d){%>
+        <li class="normal">
+            <div class="state-li">
+                <%if(d.tpl=='value-lable'){ %>
+                    <p class="normal-up">
+                        <em><%=d.valueLables%></em>
+                        <i class="normal-unit"><%=d.unit%></i>
+                    </p>
+                    <p class="normal-down">
+                        <%=d.lable%>
+                    </p>
+                <% }else if(d.tpl=='icon-lable'){%>
+                    <p class="normal-up">
+                        <i class="iconfont"><%=d.icon%></i>
+                    </p>
+                    <p class="normal-down">
+                        <%=d.lable%>
+                    </p>
+                <% }else if(d.tpl=='icon'){ %>
+                    <div class="normal-only">
+                        <i class="iconfont"><%=d.icon%></i>
+                    </div>
+                <% }else if(d.tpl=='value'){ %>
+                    <div class="normal-only">
+                        <em><%=d.valueLables%></em>
+                    </div>
+                <% }else if(d.tpl=='icon-value'){ %>
+                    <p class="normal-up">
+                        <i class="iconfont"><%=d.icon%></i>
+                    </p>
+                    <p class="normal-down">
+                        <%=d.valueLables%>
+                    </p>
+                <%};%>   
+            </div>
+        </li>
+    <%});%>
+</ul>

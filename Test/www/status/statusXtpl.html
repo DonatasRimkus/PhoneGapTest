@@ -1,0 +1,57 @@
+<ul class='statusX-label clearfix first-margin'>
+	<%_.each(data,function(d){%>
+		<%if(d.status == 'up'){%>
+			<%if(d.tpl=='icon-lable'){ %>
+			<li class='statusX-label-up'>
+				<i class='iconfont'><%=d.icon%></i>
+				<span><%=d.lable%></span>
+			</li>
+			<%}else if(d.tpl=='icon-value'){ %>
+			<li class='statusX-label-up'>
+				<i class='iconfont'><%=d.icon%></i>
+				<span><%=d.valueLables%></span>
+			</li>
+			<%}else if(d.tpl=='value-lable'){ %>
+			<li class='statusX-label-up'>
+				<em><%=d.valueLables%></em>
+				<i class="normal-unit"><%=d.unit%></i>
+				<span><%=d.lable%></span>
+			</li>
+			<%}else if(d.tpl=='value'){ %>
+			<li class='statusX-label-up'>
+				<span><%=d.valueLables%></span>
+			</li>
+			<% }else if(d.tpl=='icon'){ %>
+			<li class='statusX-label-up'>
+				<i class='iconfont'><%=d.icon%></i>
+			</li>
+			<% } %>
+		<%}else {%>
+			<%if(d.tpl=='icon-lable'){ %>
+			<li class='statusX-label-down'>
+				<i class='iconfont'><%=d.icon%></i>
+				<span><%=d.lable%></span>
+			</li>
+			<%}else if(d.tpl=='icon-value'){ %>
+			<li class='statusX-label-down'>
+				<i class='iconfont'><%=d.icon%></i>
+				<span><%=d.valueLables%></span>
+			</li>
+			<%}else if(d.tpl=='value-lable'){ %>
+			<li class='statusX-label-down'>
+				<em><%=d.valueLables%></em>
+				<i class="normal-unit"><%=d.unit%></i>
+				<span><%=d.lable%></span>
+			</li>
+			<%}else if(d.tpl=='value'){ %>
+			<li class='statusX-label-down'>
+				<span><%=d.valueLables%></span>
+			</li>
+			<% }else if(d.tpl=='icon'){ %>
+			<li class='statusX-label-down'>
+				<i class='iconfont'><%=d.icon%></i>
+			</li>
+			<% } %>
+		<%}%>
+	<%});%>
+</ul>
