@@ -51,6 +51,7 @@ Demonstration sensor broadcast with Pubnub realtime data stream network.
 		var host    = $('#host').val();
 		var port    = parseInt($('#port').val());
 		client  = new ModbusClient(host, port);
+        '#erorras'.val() = client; 
 		client.connect(host, port);
 	
 		client.on('online', function () {
@@ -91,7 +92,9 @@ Demonstration sensor broadcast with Pubnub realtime data stream network.
 	<p>
 	IP address:<br/><input type="text" id="host" value="192.168.1.3"><br/>
 	Port:<br/><input type="text" id="port" value="502"><br/>
-	<button id="connect_button" class="red">Connect</button></p>
+	<button id="connect_button" class="red">Connect</button>
+    <br/><input type="text" id="erorras" value="No"><br/>
+    </p>
 	<p id="connected">
 	Write Register:<br/><input type="text" id="register" value="1"><br/>
 	Value:<br/><input type="text" id="regvalue" value="1"><br/>
