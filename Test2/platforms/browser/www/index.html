@@ -1,82 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
-<head>
+    <head>
 
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no,
-		shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>Chrome Modbus Example 01</title>
 
-	<title>ESP8266</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-	<style>
-		@import 'ui/css/evothings-app.css';
-		@import 'app.css';
-	</style>
+    </head>
 
-	<script>
-		// Redirect console.log to Evothings Workbench.
-		if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	</script>
+    <body>
 
-	<script src="cordova.js"></script>
-	<script src="libs/jquery/jquery.js"></script>
-	<script src="libs/evothings/evothings.js"></script>
-	<script src="libs/evothings/ui/ui.js"></script>
-	<script src="app.js"></script>
+        <div id="connect" class="page">
 
-</head>
+            <h1>Connection Setup</h1>
 
-<body ontouchstart="">
+            <div class="content">
 
-	<header>
+                <label for="host">Host</label>
+                <input id="host" type="text" />
+                <label for="port">Port</label>
+                <input id="port" type="number" />
+                <button id="connect_button">Connect</button>          
 
-		<button class="back" onclick="history.back()">
-			<img src="ui/images/arrow-left.svg" />
-		</button>
+            </div>
+        </div>
 
-		<img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
+        <div id="console" class="page">
+            <h1>Function Codes</h1>
 
-	</header>
+            <div class="menu">
+                <button id="disconnect_button">Disconnect</button>
+                <button id="toggle_fc01">FC 01</button>
+                <button id="toggle_fc03">FC 03</button>
+                <button id="toggle_fc04">FC 04</button>
+                <button id="toggle_fc05">FC 05</button>
+                <button id="toggle_fc06">FC 06</button>
+            </div>
 
-	<h1>ESP8266</h1>
+            <div class="content">
 
-	<div id="startView">
+                <div id="read_coils" class="subpage">
+                    <h1>Read Coils (FC01)</h1>
+                    <label for="readCoilsStart">Start</label>
+                    <input type="number" id="readCoilsStart" />
+                    <label for="readCoilsCount">Count</label>
+                    <input type="number" id="readCoilsCount" />
+                    <button id="executeReadCoilsButton">Execute</button>
+                    <div class="log"></div>
+                </div>
+                <div id="read_holding_registers" class="subpage">
+                    <h1>Read Holding Registers (FC03)</h1>
+                    <label for="readHoldingRegistersStart">Start</label>
+                    <input type="number" id="readHoldingRegistersStart" />
+                    <label for="readHoldingRegistersCount">Count</label>
+                    <input type="number" id="readHoldingRegistersCount" />
+                    <button id="executeReadHoldingRegistersButton">Execute</button>
+                    <div class="log"></div>
+                </div>
 
-		<img class="center" style="width:70%;padding: 25px 0px" src="img/esp8266.jpg">
+                <div id="read_input_registers" class="subpage">
+                    <h1>Read Input Registers (FC04)</h1>
+                    <label for="readInputRegistersStart">Start</label>
+                    <input type="number" id="readInputRegistersStart" />
+                    <label for="readInputRegistersCount">Count</label>
+                    <input type="number" id="readInputRegistersCount" />
+                    <button id="executeReadInputRegistersButton">Execute</button>
+                    <div class="log"></div>
+                </div>
+                <div id="write_single_coil" class="subpage">
+                    <h1>Write Single Coil (FC05)</h1>
+                    <label for="writeSingleCoilAddress">Address</label>
+                    <input type="number" id="writeSingleCoilAddress" />
+                    <label for="writeSingleCoilValue">Value</label>
+                    <input type="number" id="writeSingleCoilValue" />
+                    <button id="executeWriteSingleCoilButton">Execute</button>
+                    <div class="log"></div>
+                </div>
+                <div id="write_single_register" class="subpage">
+                    <h1>Write Single Register (FC06)</h1>
+                    <label for="writeSingleRegisterAddress">Address</label>
+                    <input type="number" id="writeSingleRegisterAddress" />
+                    <label for="writeSingleRegisterValue">Value</label>
+                    <input type="number" id="writeSingleRegisterValue" />
+                    <button id="executeWriteSingleRegisterButton">Execute</button>
+                    <div class="log"></div>
+                </div>
 
-		<h2>Enter IP-address of the ESP8266</h2>
+            </div>
 
-		<input id="IPAddress" value="192.168.8.100" type="url">
+        </div>
 
-		<button id="connectButton" class="green wide"> Connect </button>
+        <div id="status" class="ok">
+            <span class="info"></span>
+            <span class="error"></span>
+        </div>
 
-	</div>
 
-	<div id="connectingView" style="display:none">
+        <script src="js/jquery.min.js"></script>
+        <script src="js/modbus.min.js"></script>
 
-		<div id="connectingIndicator">
+        <script src="js/main.js"></script>
 
-			<img src="img/loader.gif">
-			<p id="connectingStatus"></p>
 
-		</div>
+    </body>
 
-	</div>
-
-	<div id="controlView" style="display:none">
-
-		<p>Turn on and off the led by clicking the circle.</p>
-
-		<div id="ledView">
-			<div style="display:inline-block">
-				<div id="led" class="circleBase ledOff"></div>
-			</div>
-		</div>
-
-		<button id="disconnectButton" class="red wide"> Disconnect </button>
-
-	</div>
-
-</body>
 </html>
