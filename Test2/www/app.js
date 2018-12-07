@@ -1,103 +1,150 @@
-(function () {
+//
+// Copyright 2015, Evothings AB
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
-    var con = document.getElementById('log');
+$(document).ready(function() {
 
-    var log = function (text) {
-    
-        var e = document.createElement('span'),
-            br = document.createElement('br');
+	$('#connectButton').click(function() {
+		app.connect()
+	})
 
-        e.innerHTML = text;
+	$('#disconnectButton').click(function() {
+		app.disconnect()
+	})
 
-        con.appendChild(e);
-        con.appendChild(br);
-    
-    };
+	$('#led').click(function(){
+		app.ledOn()
+	})	
+})
 
-    var client  = new ModbusClient(),
-        loop    = new Loop(client),
-        wr      = 0;
+var app = {}
 
-   
-    loop.readInputRegisters(10, 4);
-    loop.readInputRegisters(14, 4);
-    loop.readInputRegisters(18, 4);
-    loop.readInputRegisters(30, 4); 
+app.PORT = 502
+app.socketId
 
-    loop.on('update', function (data) {
-    
-        console.log(data);
+app.connect = function() {
 
-    });
+	var IPAddress = $('#IPAddress').val()
 
-    var write = function () {
-    
-        var offset  = parseInt($('#offset').val());
+	console.log('Trying to connect to ' + IPAddress)
 
-        log('Writing ' + wr + ' to ' + offset);
+	$('#startView').hide()
+	$('#connectingStatus').text('Connecting to ' + IPAddress)
+	$('#connectingView').show()
 
-        client.writeSingleRegister(offset, wr++).then(function () {
-        
-            log('Writing Register done!');
+	chrome.sockets.tcp.create(function(createInfo) {
 
-        }).fail(function () {
-        
-            log('Writing Register failed.');
-        
-        });
-    
-    };
+		app.socketId = createInfo.socketId
 
-    document.getElementById('write').addEventListener('click', write);
+		chrome.sockets.tcp.connect(
+			app.socketId,
+			IPAddress,
+			app.PORT,
+			connectedCallback)
+	})
 
-    log('Start connection...');
+	function connectedCallback(result) {
+	
+		if (result === 0) {
 
-    $('#console').hide();
+			 console.log('Connected to ' + IPAddress)
+					 
+			 $('#connectingView').hide()
+			 $('#controlView').show()
+			
+		}
+		else {
 
+			var errorMessage = 'Failed to connect to ' + app.IPAdress
+			console.log(errorMessage)
+			navigator.notification.alert(errorMessage, function() {})
+			$('#connectingView').hide()
+			$('#startView').show()
+		}
+	}
+}
 
-    client.on('connected', function () {
-    
-        log('Connection established.');  
+app.sendString = function(sendString) {
 
-        loop.start();
+	console.log('Trying to send:' + sendString)	
 
-        $('#connect').hide();
-        $('#console').show();
-  
-    });
+	chrome.sockets.tcp.send (
+		app.socketId,
+		app.stringToBuffer(sendString),
+		function(sendInfo) {
 
-    client.on('disconnected', function () {
-  
-        log('Connection closed.');
+			if (sendInfo.resultCode < 0) {
 
-        loop.stop();
+				var errorMessage = 'Failed to send data'
 
-        $('#connect').show();
-        $('#disconnect').hide(); 
+				console.log(errorMessage)
+				navigator.notification.alert(errorMessage, function() {})
+			}
+		}
+	)
+}
 
-    });
+app.ledOn = function() {
 
-    client.on('error', function () {
+	app.sendString('H')
 
-        log('Connection error.');
+	$('#led').removeClass('ledOff').addClass('ledOn')
 
-        loop.stop();
+	$('#led').unbind('click').click(function(){
+		app.ledOff()
+	})	
+}
 
-        setTimeout(function () {
-        
-            client.reconnect();
+app.ledOff = function() {
 
-        }, 5000);
+	app.sendString('L')
 
-    });
+	$('#led').removeClass('ledOn').addClass('ledOff')
 
-    $('#connect_button').on('click', function () {
+	$('#led').unbind('click').click(function(){
+		app.ledOn()
+	})
+}
 
-        var host    = $('#host').val(),
-            port    = parseInt($('#port').val());
+app.disconnect = function() {
 
-        client.connect(host, port);
+	chrome.sockets.tcp.close(app.socketId, function() {
+		console.log('TCP Socket close finished.')
+	})
 
-    });
+	$('#controlView').hide()
+	$('#startView').show()
+}
 
-})();
+// Helper functions. 
+
+app.stringToBuffer = function(string) {
+
+	var buffer = new ArrayBuffer(string.length)
+	var bufferView = new Uint8Array(buffer)
+	
+	for (var i = 0; i < string.length; ++i) {
+
+		bufferView[i] = string.charCodeAt(i)
+	}
+
+	return buffer
+}
+
+app.bufferToString = function(buffer) {
+
+	return String.fromCharCode.apply(null, new Uint8Array(buffer))
+}
+
